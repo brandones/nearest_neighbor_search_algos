@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+from nns_bruteforce import nns_bruteforce
 from nns_cube import nns_cube
 from generate_S import generate_S
 from random import random
@@ -24,11 +25,14 @@ q_input = input( str.format(
 
 if not q_input:
     q = tuple( (random() for i in range(d)))
+    print( str.format("q = {}\n", q))
 else:
-    q = tuple( q_input )
+    q = eval( q_input )
 
-print( str.format("q = {}", q))
+selection = input( "Enter 0 for bruteforce, 1 for cube\n" )
+if selection == "0":
+    result = nns_bruteforce( S, q )
+elif selection == "1":
+    result = nns_cube( S, q )
 
-result = nns_cube( S, q )
-
-print( str.format("Nearest neighbor: {}", result))
+print( str.format("Nearest neighbor: {}\n", result))
