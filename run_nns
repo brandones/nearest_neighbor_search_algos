@@ -1,0 +1,34 @@
+#!/usr/bin/python
+
+from nns_cube import nns_cube
+from generate_S import generate_S
+from random import random
+
+infile_name = input("Enter input file name or blank to generate\n")
+
+if not infile_name:
+    n = int( input( "Enter a number of points\n" ))
+    d = int( input( "Enter a number of dimensions\n" ))
+    writeout = input( "Want a file? 'y' or 'n'\n" ) == "y"
+    S = generate_S( n, d, writeout )
+
+else:
+    with open(infile_name, "r") as infile:
+        S = eval(infile.read())
+
+d = len(S[0])
+
+q_input = input( str.format(
+        "Enter a tuple with {} elements to query a neighbor for, " +
+        "or blank to randomly generate\n", d))
+
+if not q_input:
+    q = tuple( (random() for i in range(d)))
+else:
+    q = tuple( q_input )
+
+print( str.format("q = {}", q))
+
+result = nns_cube( S, q )
+
+print( str.format("Nearest neighbor: {}", result))
